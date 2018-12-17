@@ -7,7 +7,7 @@
 
 
     <StackLayout>
-        <!--Score, user starts with 1000-->
+        <!--Score, user starts with 200-->
         <Label x:Name="Points" FontSize="15" TextColor="Red"/>
 
         <!--App Instructions -->
@@ -19,7 +19,7 @@
 
         <Button Text="Higher" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" FontSize="40" Clicked="Higher_Clicked"/>
         
-        <Button Text="Lower" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" FontSize="40"/>
+        <Button Text="Lower" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" FontSize="40" Clicked="Lower_Clicked"/>
 
         <Label Text="Enter bid amount using the slider:" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
         

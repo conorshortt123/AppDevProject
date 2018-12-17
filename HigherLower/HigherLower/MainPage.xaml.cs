@@ -9,22 +9,24 @@ namespace HigherLower
 {
     public partial class MainPage : ContentPage
     {
-        public int points = 200;
-        public int RandomNumber1;
-        public int RandomNumber2;
+        public double points = 20;
+        public int RandomNumberPrevious;
+        public int RandomNumberNext;
+
+        Random random = new Random();
 
         public MainPage()
         {
             InitializeComponent();
             SliderValue.Text = 0.ToString();
             Points.Text = "Your points: " + points;
+            Slider.Maximum = points;
         }
 
         private void Button_Clicked(object sender, EventArgs e)
         {
-            Random random = new Random();
-            RandomNumber1 = random.Next(1, 52);
-            RandomNum.Text = RandomNumber1.ToString();
+            RandomNumberPrevious = random.Next(1, 52);
+            RandomNum.Text = RandomNumberPrevious.ToString();
         }
 
         private void Slider_ValueChanged(object sender, ValueChangedEventArgs e)
@@ -34,7 +36,46 @@ namespace HigherLower
 
         private void Higher_Clicked(object sender, EventArgs e)
         {
-            
+            RandomNumberPrevious = RandomNumberNext;
+            RandomNumberNext = random.Next(1, 52);
+            RandomNum.Text = RandomNumberNext.ToString();
+
+            if(RandomNumberNext > RandomNumberPrevious)
+            {
+                hilo.Text = "Correct, it was higher. You got another " + (Slider.Value * 2) + " points!";
+                points += (Slider.Value * 2);
+                Slider.Maximum = points;
+                Points.Text = "Your points: " + points;
+            }
+            else
+            {
+                hilo.Text = "Unlucky! You lost " + Slider.Value + " points!";
+                points -= Slider.Value;
+                Slider.Maximum = points;
+                Points.Text = "Your points: " + points;
+            }
+        }
+
+        private void Lower_Clicked(object sender, EventArgs e)
+        {
+            RandomNumberPrevious = RandomNumberNext;
+            RandomNumberNext = random.Next(1, 52);
+            RandomNum.Text = RandomNumberNext.ToString();
+
+            if (RandomNumberNext < RandomNumberPrevious)
+            {
+                hilo.Text = "Correct, it was lower. You got another " + (Slider.Value*2) + " points!";
+                points += (Slider.Value*2);
+                Slider.Maximum = points;
+                Points.Text = "Your points: " + points;
+            }
+            else
+            {
+                hilo.Text = "Unlucky! You lost " + Slider.Value + " points!";
+                points -= Slider.Value;
+                Slider.Maximum = points;
+                Points.Text = "Your points: " + points;
+            }
         }
     }
 }
