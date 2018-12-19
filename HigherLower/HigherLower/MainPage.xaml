@@ -19,10 +19,10 @@
 
         <StackLayout Orientation="Horizontal">
         
-        <Button Text="Higher" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" FontSize="30" Clicked="Higher_Clicked"/>
+            <Button Text="Higher" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" FontSize="30" Clicked="Higher_Clicked"/>
 
-        <Button Text="Lower" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" FontSize="30" Clicked="Lower_Clicked"/>
-        
+            <Button Text="Lower" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" FontSize="30" Clicked="Lower_Clicked"/>
+
         </StackLayout>
         
         <Label Text="Enter bid amount using the slider:" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
@@ -31,7 +31,7 @@
 
         <Label x:Name="SliderValue" FontSize="30" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
 
-        <Label x:Name="hilo" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"/>
+        <Label x:Name="hilo" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
 
     </StackLayout>
 

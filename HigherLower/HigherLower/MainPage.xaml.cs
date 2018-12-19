@@ -9,17 +9,23 @@ namespace HigherLower
 {
     public partial class MainPage : ContentPage
     {
-        public double points = 20;
-        public int RandomNumberPrevious;
-        public int RandomNumberNext;
-
+        public int points = 20;
         Random random = new Random();
 
+        public int RandomNumber;
+        public int RandomNumberNext;
+
+        int initCardValue;
+        int nextCardValue;
+   
         public MainPage()
         {
             InitializeComponent();
+
             SliderValue.Text = 0.ToString();
+
             Points.Text = "Your points: " + points;
+
             Slider.Maximum = points;
 
             Card.Source = ImageSource.FromResource("HigherLower.Images.gray_back.png");
@@ -27,64 +33,83 @@ namespace HigherLower
 
         private void Button_Clicked(object sender, EventArgs e)
         {
-            RandomNumberPrevious = random.Next(1, 53);
+            RandomNumber = random.Next(1, 52);
 
-            int cardValue;
+            ChangeImage(RandomNumber);
 
-            if (RandomNumberPrevious >= 1 && RandomNumberPrevious <= 4)
+            initCardValue = GetCardValue1(RandomNumber);
+
+            hilo.Text = "Inital card value: " + initCardValue + "Next card value: " + nextCardValue;
+        }
+
+        private void Slider_ValueChanged(object sender, ValueChangedEventArgs e)
+        {
+            SliderValue.Text = ((int)Slider.Value).ToString();
+        }
+
+        private void Higher_Clicked(object sender, EventArgs e)
+        {
+            RandomNumber = random.Next(1, 52);
+            
+            ChangeImage(RandomNumber);
+
+            nextCardValue = GetCardValue2(RandomNumber);
+
+            if(nextCardValue > initCardValue)
             {
-                cardValue = 1;
+                hilo.Text = "Correct, it was higher. You got another " + (Slider.Value * 1.5) + " points!";
+                points += (int)(Slider.Value * 1.5);
+                Slider.Maximum = points;
+                Points.Text = "Your points: " + points;
             }
-            else if(RandomNumberPrevious >= 5 && RandomNumberPrevious <= 8)
+            else if(nextCardValue == initCardValue)
             {
-                cardValue = 2;
+                hilo.Text = "Inital card value: " + initCardValue + "Next card value: " + nextCardValue;
             }
-            else if (RandomNumberPrevious >= 9 && RandomNumberPrevious <= 12)
+            else
             {
-                cardValue = 3;
-            }
-            else if (RandomNumberPrevious >= 13 && RandomNumberPrevious <= 16)
-            {
-                cardValue = 4;
-            }
-            else if (RandomNumberPrevious >= 17 && RandomNumberPrevious <= 20)
-            {
-                cardValue = 5;
-            }
-            else if (RandomNumberPrevious >= 21 && RandomNumberPrevious <= 24)
-            {
-                cardValue = 6;
-            }
-            else if (RandomNumberPrevious >= 25 && RandomNumberPrevious <= 28)
-            {
-                cardValue = 7;            
-            }
-            else if (RandomNumberPrevious >= 29 && RandomNumberPrevious <= 32)
-            {
-                cardValue = 8;
-            }
-            else if (RandomNumberPrevious >= 33 && RandomNumberPrevious <= 36)
-            {
-                cardValue = 9;
-            }
-            else if (RandomNumberPrevious >= 37 && RandomNumberPrevious <= 40)
-            {
-                cardValue = 10;
-            }
-            else if (RandomNumberPrevious >= 41 && RandomNumberPrevious <= 44)
-            {
-                cardValue = 11;
-            }
-            else if (RandomNumberPrevious >= 45 && RandomNumberPrevious <= 48)
-            {
-                cardValue = 12;
-            }
-            else if (RandomNumberPrevious >= 49 && RandomNumberPrevious <= 52)
-            {
-                cardValue = 13;
+                hilo.Text = "Unlucky! You lost " + Slider.Value + " points!";
+                points -= (int)Slider.Value;
+                Slider.Maximum = points;
+                Points.Text = "Your points: " + points;
             }
 
-            switch (RandomNumberPrevious)
+            initCardValue = nextCardValue;
+        }
+
+        private void Lower_Clicked(object sender, EventArgs e)
+        {
+            RandomNumber = random.Next(1, 52);
+
+            ChangeImage(RandomNumber);
+
+            nextCardValue = GetCardValue2(RandomNumber);
+
+            if (initCardValue < nextCardValue)
+            {
+                hilo.Text = "Correct, it was lower. You got another " + (Slider.Value*1.5) + " points!";
+                points += (int)(Slider.Value*1.5);
+                Slider.Maximum = points;
+                Points.Text = "Your points: " + points;
+            }
+            else if (nextCardValue == initCardValue)
+            {
+                hilo.Text = "Inital card value: " + initCardValue + "Next card value: " + nextCardValue;
+            }
+            else
+            {
+                hilo.Text = "Unlucky! You lost " + Slider.Value + " points!";
+                points -= (int)Slider.Value;
+                Slider.Maximum = points;
+                Points.Text = "Your points: " + points;
+            }
+
+            initCardValue = nextCardValue;
+        }
+
+        void ChangeImage(int RandomNumber)
+        {
+            switch (RandomNumber)
             {
                 case 1:
                     Card.Source = ImageSource.FromResource("HigherLower.Images.2C.png");
@@ -245,51 +270,120 @@ namespace HigherLower
             }
         }
 
-        private void Slider_ValueChanged(object sender, ValueChangedEventArgs e)
+        int GetCardValue1(int RandomNumber)
         {
-            SliderValue.Text = Slider.Value.ToString();
+            if (RandomNumber >= 1 && RandomNumber <= 4)
+            {
+                initCardValue = 1;
+            }
+            else if (RandomNumber >= 5 && RandomNumber <= 8)
+            {
+                initCardValue = 2;
+            }
+            else if (RandomNumber >= 9 && RandomNumber <= 12)
+            {
+                initCardValue = 3;
+            }
+            else if (RandomNumber >= 13 && RandomNumber <= 16)
+            {
+                initCardValue = 4;
+            }
+            else if (RandomNumber >= 17 && RandomNumber <= 20)
+            {
+                initCardValue = 5;
+            }
+            else if (RandomNumber >= 21 && RandomNumber <= 24)
+            {
+                initCardValue = 6;
+            }
+            else if (RandomNumber >= 25 && RandomNumber <= 28)
+            {
+                initCardValue = 7;
+            }
+            else if (RandomNumber >= 29 && RandomNumber <= 32)
+            {
+                initCardValue = 8;
+            }
+            else if (RandomNumber >= 33 && RandomNumber <= 36)
+            {
+                initCardValue = 9;
+            }
+            else if (RandomNumber >= 37 && RandomNumber <= 40)
+            {
+                initCardValue = 10;
+            }
+            else if (RandomNumber >= 41 && RandomNumber <= 44)
+            {
+                initCardValue = 11;
+            }
+            else if (RandomNumber >= 45 && RandomNumber <= 48)
+            {
+                initCardValue = 12;
+            }
+            else if (RandomNumber >= 49 && RandomNumber <= 52)
+            {
+                initCardValue = 13;
+            }
+
+            return initCardValue;
         }
 
-        private void Higher_Clicked(object sender, EventArgs e)
+        int GetCardValue2(int RandomNumber)
         {
-            RandomNumberPrevious = RandomNumberNext;
-            RandomNumberNext = random.Next(1, 52);
+            if (RandomNumber >= 1 && RandomNumber <= 4)
+            {
+                nextCardValue = 1;
+            }
+            else if (RandomNumber >= 5 && RandomNumber <= 8)
+            {
+                nextCardValue = 2;
+            }
+            else if (RandomNumber >= 9 && RandomNumber <= 12)
+            {
+                nextCardValue = 3;
+            }
+            else if (RandomNumber >= 13 && RandomNumber <= 16)
+            {
+                nextCardValue = 4;
+            }
+            else if (RandomNumber >= 17 && RandomNumber <= 20)
+            {
+                nextCardValue = 5;
+            }
+            else if (RandomNumber >= 21 && RandomNumber <= 24)
+            {
+                nextCardValue = 6;
+            }
+            else if (RandomNumber >= 25 && RandomNumber <= 28)
+            {
+                nextCardValue = 7;
+            }
+            else if (RandomNumber >= 29 && RandomNumber <= 32)
+            {
+                nextCardValue = 8;
+            }
+            else if (RandomNumber >= 33 && RandomNumber <= 36)
+            {
+                nextCardValue = 9;
+            }
+            else if (RandomNumber >= 37 && RandomNumber <= 40)
+            {
+                nextCardValue = 10;
+            }
+            else if (RandomNumber >= 41 && RandomNumber <= 44)
+            {
+                nextCardValue = 11;
+            }
+            else if (RandomNumber >= 45 && RandomNumber <= 48)
+            {
+                nextCardValue = 12;
+            }
+            else if (RandomNumber >= 49 && RandomNumber <= 52)
+            {
+                nextCardValue = 13;
+            }
 
-            if(RandomNumberNext > RandomNumberPrevious)
-            {
-                hilo.Text = "Correct, it was higher. You got another " + (Slider.Value * 1.5) + " points!";
-                points += (Slider.Value * 1.5);
-                Slider.Maximum = points;
-                Points.Text = "Your points: " + points;
-            }
-            else
-            {
-                hilo.Text = "Unlucky! You lost " + Slider.Value + " points!";
-                points -= Slider.Value;
-                Slider.Maximum = points;
-                Points.Text = "Your points: " + points;
-            }
-        }
-
-        private void Lower_Clicked(object sender, EventArgs e)
-        {
-            RandomNumberPrevious = RandomNumberNext;
-            RandomNumberNext = random.Next(1, 52);
-
-            if (RandomNumberNext < RandomNumberPrevious)
-            {
-                hilo.Text = "Correct, it was lower. You got another " + (Slider.Value*1.5) + " points!";
-                points += (Slider.Value*1.5);
-                Slider.Maximum = points;
-                Points.Text = "Your points: " + points;
-            }
-            else
-            {
-                hilo.Text = "Unlucky! You lost " + Slider.Value + " points!";
-                points -= Slider.Value;
-                Slider.Maximum = points;
-                Points.Text = "Your points: " + points;
-            }
+            return nextCardValue;
         }
     }
 }
