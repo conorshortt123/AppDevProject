@@ -22,6 +22,7 @@
     <None Remove="Images\3D.png" />
     <None Remove="Images\3H.png" />
     <None Remove="Images\3S.png" />
+    <None Remove="Images\4C.png" />
     <None Remove="Images\4D.png" />
     <None Remove="Images\4H.png" />
     <None Remove="Images\4S.png" />
@@ -78,6 +79,7 @@
     <EmbeddedResource Include="Images\3D.png" />
     <EmbeddedResource Include="Images\3H.png" />
     <EmbeddedResource Include="Images\3S.png" />
+    <EmbeddedResource Include="Images\4C.png" />
     <EmbeddedResource Include="Images\4D.png" />
     <EmbeddedResource Include="Images\4H.png" />
     <EmbeddedResource Include="Images\4S.png" />

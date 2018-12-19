@@ -10,6 +10,7 @@ namespace HigherLower
     public partial class MainPage : ContentPage
     {
         public int points = 20;
+        public int highScore;
         Random random = new Random();
 
         public int RandomNumber;
@@ -26,8 +27,15 @@ namespace HigherLower
 
             Points.Text = "Your points: " + points;
 
+            if (points > highScore)
+            {
+                highScore = points;
+                HighScore.Text = "High Score: " + highScore;
+            }
+
             Slider.Maximum = points;
 
+            
             Card.Source = ImageSource.FromResource("HigherLower.Images.gray_back.png");
         }
 
@@ -38,8 +46,6 @@ namespace HigherLower
             ChangeImage(RandomNumber);
 
             initCardValue = GetCardValue1(RandomNumber);
-
-            hilo.Text = "Inital card value: " + initCardValue + "Next card value: " + nextCardValue;
         }
 
         private void Slider_ValueChanged(object sender, ValueChangedEventArgs e)
@@ -57,24 +63,39 @@ namespace HigherLower
 
             if(nextCardValue > initCardValue)
             {
-                hilo.Text = "Correct, it was higher. You got another " + (Slider.Value * 1.5) + " points!";
-                points += (int)(Slider.Value * 1.5);
+                hilo.Text = "Correct, it was higher. You got another " + (int)(Slider.Value) + " points!";
+                points += (int)(Slider.Value);
                 Slider.Maximum = points;
                 Points.Text = "Your points: " + points;
+                if(points>highScore)
+                {
+                    highScore = points;
+                    HighScore.Text = "High Score: " + highScore;
+                }
             }
             else if(nextCardValue == initCardValue)
             {
-                hilo.Text = "Inital card value: " + initCardValue + "Next card value: " + nextCardValue;
+                hilo.Text = "Card values are equal! Try again.";
             }
-            else
+            else if(nextCardValue < initCardValue)
             {
-                hilo.Text = "Unlucky! You lost " + Slider.Value + " points!";
+                hilo.Text = "Unlucky! You lost " + (int)Slider.Value + " points!";
                 points -= (int)Slider.Value;
+                if (points <= 0)
+                {
+                    DisplayAlert("You lost.", "Unfortunately you lost all of your points. Press OK to reset and start a new game.", "OK");
+
+                    Card.Source = ImageSource.FromResource("HigherLower.Images.gray_back.png");
+
+                    points = 20;
+
+                    hilo.Text = "";
+                }
                 Slider.Maximum = points;
                 Points.Text = "Your points: " + points;
             }
 
-            initCardValue = nextCardValue;
+            initCardValue = nextCardValue;      
         }
 
         private void Lower_Clicked(object sender, EventArgs e)
@@ -85,21 +106,36 @@ namespace HigherLower
 
             nextCardValue = GetCardValue2(RandomNumber);
 
-            if (initCardValue < nextCardValue)
+            if (initCardValue > nextCardValue)
             {
-                hilo.Text = "Correct, it was lower. You got another " + (Slider.Value*1.5) + " points!";
-                points += (int)(Slider.Value*1.5);
+                hilo.Text = "Correct, it was lower. You got another " + (int)(Slider.Value) + " points!";
+                points += (int)(Slider.Value);
                 Slider.Maximum = points;
                 Points.Text = "Your points: " + points;
+                if (points > highScore)
+                {
+                    highScore = points;
+                    HighScore.Text = "High Score: " + highScore;
+                }
             }
             else if (nextCardValue == initCardValue)
             {
-                hilo.Text = "Inital card value: " + initCardValue + "Next card value: " + nextCardValue;
+                hilo.Text = "Card values are equal! Try again.";
             }
-            else
+            else if(initCardValue < nextCardValue)
             {
-                hilo.Text = "Unlucky! You lost " + Slider.Value + " points!";
+                hilo.Text = "Unlucky! You lost " + (int)Slider.Value + " points!";
                 points -= (int)Slider.Value;
+                if (points <= 0)
+                {
+                    DisplayAlert("You lost.", "Unfortunately you lost all of your points. Press OK to reset and start a new game.", "OK");
+
+                    Card.Source = ImageSource.FromResource("HigherLower.Images.gray_back.png");
+
+                    points = 20;
+
+                    hilo.Text = "";
+                }
                 Slider.Maximum = points;
                 Points.Text = "Your points: " + points;
             }
