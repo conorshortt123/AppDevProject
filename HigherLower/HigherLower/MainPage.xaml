@@ -11,24 +11,28 @@
         <Label x:Name="Points" FontSize="15" TextColor="Red"/>
 
         <!--App Instructions -->
-        <Label Text="Hit 'Start' to generate a random card. You can then enter the amount you wish to bid using the slider" HorizontalOptions="CenterAndExpand" FontSize="20"/>
+        <Label Text="Hit 'Start' to generate a random card. You can then enter the amount you wish to bid using the slider" HorizontalOptions="CenterAndExpand" FontSize="15"/>
+
+        <Button Text="Start" Clicked="Button_Clicked" FontSize="30"/>
+
+        <Image x:Name="Card" Aspect="AspectFit"/>
+
+        <StackLayout Orientation="Horizontal">
         
-        <Button Text="Start" Clicked="Button_Clicked" FontSize="40"/>
+        <Button Text="Higher" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" FontSize="30" Clicked="Higher_Clicked"/>
 
-        <Label x:Name="RandomNum" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" FontSize="40"/>
-
-        <Button Text="Higher" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" FontSize="40" Clicked="Higher_Clicked"/>
+        <Button Text="Lower" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" FontSize="30" Clicked="Lower_Clicked"/>
         
-        <Button Text="Lower" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" FontSize="40" Clicked="Lower_Clicked"/>
-
+        </StackLayout>
+        
         <Label Text="Enter bid amount using the slider:" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
-        
+
         <Slider x:Name="Slider" Minimum="0" Maximum="1000" ValueChanged="Slider_ValueChanged"/>
 
         <Label x:Name="SliderValue" FontSize="30" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
-        
+
         <Label x:Name="hilo" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"/>
-        
+
     </StackLayout>
-    
+
 </ContentPage>
