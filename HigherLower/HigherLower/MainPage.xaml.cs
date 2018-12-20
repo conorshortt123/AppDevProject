@@ -8,9 +8,11 @@ using Xamarin.Forms;
 namespace HigherLower
 {
     public partial class MainPage : ContentPage
-    {
+    {   
+        //Global variables and Random number object generator
         public int points = 20;
         public int highScore;
+
         Random random = new Random();
 
         public int RandomNumber;
@@ -18,13 +20,14 @@ namespace HigherLower
 
         int initCardValue;
         int nextCardValue;
-   
+
         public MainPage()
         {
+            /*  Set labels to slider value, high score value, and slider maximum value to points,
+                as set in global variables. Also setting the card image to a gray card back. */
             InitializeComponent();
 
             SliderValue.Text = 0.ToString();
-
             Points.Text = "Your points: " + points;
 
             if (points > highScore)
@@ -35,12 +38,13 @@ namespace HigherLower
 
             Slider.Maximum = points;
 
-            
             Card.Source = ImageSource.FromResource("HigherLower.Images.gray_back.png");
         }
-
+        //Start button clicked event
         private void Button_Clicked(object sender, EventArgs e)
         {
+            /*  Generates random number and then calls the ChangeImage function, supplying it with the random number variable.
+                It also calls the GetCardValue1 function, which returns a value to initCardValue  */
             RandomNumber = random.Next(1, 52);
 
             ChangeImage(RandomNumber);
@@ -48,13 +52,19 @@ namespace HigherLower
             initCardValue = GetCardValue1(RandomNumber);
         }
 
+        //Slider value changed event, sets the label text to the updated value
         private void Slider_ValueChanged(object sender, ValueChangedEventArgs e)
         {
             SliderValue.Text = ((int)Slider.Value).ToString();
         }
 
+        //Higher button clicked event
         private void Higher_Clicked(object sender, EventArgs e)
         {
+            /* Generates a new random number, passes it to GetCardValue2 & Change image functions the if statement processes whether or not the initial card value is greater than
+             the next card value. If yes, outputs correct message and updates points, maximum bet amount, and high score. If initial and next values are the same, it outputs a try
+             again message, if the guess was incorrect, it minuses the bet from points and updates max slider value.*/
+
             RandomNumber = random.Next(1, 52);
             
             ChangeImage(RandomNumber);
@@ -81,6 +91,8 @@ namespace HigherLower
             {
                 hilo.Text = "Unlucky! You lost " + (int)Slider.Value + " points!";
                 points -= (int)Slider.Value;
+                /*  This IF statement acts as a catch for if you bet your max slider amount and lose. 
+                    It displays an alert and resets card image, point amount, all labels except high score.*/
                 if (points <= 0)
                 {
                     DisplayAlert("You lost.", "Unfortunately you lost all of your points. Press OK to reset and start a new game.", "OK");
@@ -98,8 +110,10 @@ namespace HigherLower
             initCardValue = nextCardValue;      
         }
 
+        //Lower button event clicked
         private void Lower_Clicked(object sender, EventArgs e)
         {
+            /* Similar code to higher button clicked, except different if comparison */
             RandomNumber = random.Next(1, 52);
 
             ChangeImage(RandomNumber);
@@ -143,6 +157,7 @@ namespace HigherLower
             initCardValue = nextCardValue;
         }
 
+        /* Change image function, takes in RandomNumber variable and uses a large switch statement to apply every different card in a deck - 52.*/
         void ChangeImage(int RandomNumber)
         {
             switch (RandomNumber)
@@ -306,6 +321,7 @@ namespace HigherLower
             }
         }
 
+        /* GetCardValue function, takes in RandomNumber variable. If the number is from 1-4 it will have the same value. E.g 1 = 2 of Clubs, 2 = 2 of Diamonds and so on. */
         int GetCardValue1(int RandomNumber)
         {
             if (RandomNumber >= 1 && RandomNumber <= 4)
@@ -364,6 +380,7 @@ namespace HigherLower
             return initCardValue;
         }
 
+        //Same as GetCardValue1, except it returns values for the nextCardValue
         int GetCardValue2(int RandomNumber)
         {
             if (RandomNumber >= 1 && RandomNumber <= 4)
