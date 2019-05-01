@@ -1,6 +1,6 @@
 # AppDevProject - Conor Shortt #
 - Higher/Lower app coded in C#.
-INSTRUCTIONS:
+- INSTRUCTIONS:
 - Points set initially to 20.
 - Hit start to generate the first card.
 - Use slider to set bet amount.
